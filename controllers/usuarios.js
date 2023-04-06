@@ -1,43 +1,53 @@
-const {response} = require('express');
+const { response, request } = require('express');
 
-const usuariosGet = (req, res = response) => {
+
+const usuariosGet = (req = request, res = response) => {
+
+    const { q, nombre = 'No name', apikey, page = 1, limit } = req.query;
+
     res.json({
-        ok: true,
-        msg: "get api - controlador"
+        msg: 'get API - controlador',
+        q,
+        nombre,
+        apikey,
+        page, 
+        limit
     });
 }
 
 const usuariosPost = (req, res = response) => {
 
-    // const {nombre, edad} = req.body;
+    const { nombre, edad } = req.body;
 
     res.json({
-        ok: true,
-        msg: "post api - controlador",
-        // nombre, edad
+        msg: 'post API - usuariosPost',
+        nombre, 
+        edad
     });
 }
 
 const usuariosPut = (req, res = response) => {
+
+    const { id } = req.params;
+
     res.json({
-        ok: true,
-        msg: "Put api - controlador"
+        msg: 'put API - usuariosPut',
+        id
     });
 }
 
 const usuariosPatch = (req, res = response) => {
     res.json({
-        ok: true,
-        msg: "patch api - controlador"
+        msg: 'patch API - usuariosPatch'
     });
 }
 
 const usuariosDelete = (req, res = response) => {
     res.json({
-        ok: true,
-        msg: "delete api - controlador"
+        msg: 'delete API - usuariosDelete'
     });
 }
+
 
 
 
