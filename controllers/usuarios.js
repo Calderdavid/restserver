@@ -73,9 +73,6 @@ const usuariosDelete = async(req, res = response) => {
 
     const {id} = req.params;
 
-    // const usuario = await Usuario.findByIdAndDelete(id)
-
-
     //Para esta base de datos el usuario siempre va a existir 
     const usuario = await Usuario.findByIdAndUpdate(id, {estado: false});
 
