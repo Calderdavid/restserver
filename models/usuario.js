@@ -7,6 +7,21 @@ const UsuarioSchema = Schema({
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
+    apellido: {
+        type: String,
+    },
+    genero: {
+        type: String,
+    },
+    fecha_nacimiento: {
+        type: String,
+    },
+    altura: {
+        type: String,
+    },
+    peso: {
+        type: String,
+    },
     correo: {
         type: String,
         required: [true, 'El correo es obligatorio'],
