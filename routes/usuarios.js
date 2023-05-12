@@ -14,6 +14,14 @@ const {
 
 const { esRolValido, emailExiste, existeUsuarioPorId } = require('../helpers/db-validators');
 
+const {Configuration, OpenAIApi} = require("openai");
+
+const config = new Configuration({
+    apiKey: "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",
+})
+
+const openai = new OpenAIApi(config);
+
 
 const { 
     usuariosGet, 
@@ -21,6 +29,7 @@ const {
     usuariosPost, 
     usuariosPatch, 
     usuariosDelete } = require('../controllers/usuarios');
+
 
 const router = Router();
 
@@ -40,6 +49,20 @@ router.post('/', [
     check('rol').custom( esRolValido ), 
     validarCampos
 ] , usuariosPost);
+
+router.post('/chat', async(req, res) => {
+
+    const { prompt } = req.body;
+
+
+    const completion = await openai.createCompletion({
+        model: "text-davinci-003",
+        max_tokens: 512,
+        temperature: 0.6,
+        prompt: prompt
+    });
+    res.send(completion.data.choices[0].text)
+})
 
 router.patch('/', usuariosPatch);
 
