@@ -14,10 +14,13 @@ const {
 
 const { esRolValido, emailExiste, existeUsuarioPorId } = require('../helpers/db-validators');
 
+//configuracion de open ai
+
 const {Configuration, OpenAIApi} = require("openai");
 
 const config = new Configuration({
-    apiKey: "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",
+    organization: "org-bWueNUMsqtPyzLM1Y5Jta0JO",
+    apiKey: "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",
 })
 
 const openai = new OpenAIApi(config);
@@ -50,19 +53,41 @@ router.post('/', [
     validarCampos
 ] , usuariosPost);
 
-router.post('/chat', async(req, res) => {
+// router.post('/chat', async(req, res) => {
+
+//     const { prompt } = req.body;
+
+
+//     const completion = await openai.createCompletion({
+//         model: "text-davinci-003",
+//         max_tokens: 512,
+//         temperature: 0.6,
+//         prompt: prompt
+//     });
+//     res.send(completion.data.choices[0].text)
+// })
+
+
+router.post("/chat", async(req, res) => {
 
     const { prompt } = req.body;
 
-
-    const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        max_tokens: 512,
-        temperature: 0.6,
-        prompt: prompt
+    const completion = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [
+            {
+                role: "user",
+                content: prompt,
+            }
+        ],
+        temperature: 0.7
     });
-    res.send(completion.data.choices[0].text)
+    // console.log(completion.data.choices[0].message)
+    res.send(completion.data.choices[0].message.content)
 })
+
+
+
 
 router.patch('/', usuariosPatch);
 
