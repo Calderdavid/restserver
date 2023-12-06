@@ -19,8 +19,8 @@ const { esRolValido, emailExiste, existeUsuarioPorId } = require('../helpers/db-
 const {Configuration, OpenAIApi} = require("openai");
 
 const config = new Configuration({
-    organization: "org-bWueNUMsqtPyzLM1Y5Jta0JO",
-    apiKey: "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",
+    // organization: "org-bWueNUMsqtPyzLM1Y5Jta0JO",
+    apiKey: "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",
 })
 
 const openai = new OpenAIApi(config);
@@ -76,9 +76,10 @@ router.post("/chat", async(req, res) => {
         model: "gpt-3.5-turbo",
         messages: [
             {
-                role: "user",
-                content: prompt,
-            }
+                "role": "system",
+                "content": "Eres un asistente que tienes conocimientos acerca hábitos saludables de alimentación y entrenamientos"
+            },
+            ...prompt
         ],
         temperature: 0.7
     });
